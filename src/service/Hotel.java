@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Hotel {
 	//Quartos
-	private ArrayList<Quarto> quartos;
+	private ArrayList<Quarto> quartos = new ArrayList<Quarto>();;
 
 	public ArrayList<Quarto> listarQuartos(){
 		return quartos;
@@ -28,9 +28,31 @@ public class Hotel {
 		}
 		return null;
 	}
+	// Retorna um Quarto cadastrado pelo Numero ou null se não encontrar
+	public Quarto buscarQuarto(int numero) {
+	    for (Quarto q : quartos) {
+	        if (q.getNumero() == numero && q.isDisponivel()) {
+	            return q;
+	        }
+	    }
+	    return null;
+	}
+	// Retorna todos os quartos disponíveis
+	public ArrayList<Quarto> buscarQuartosDisponiveis() {
+		ArrayList<Quarto> quartosDisponiveis = new ArrayList<Quarto>();
+		
+		for(Quarto q:quartos) {
+			if (q.isDisponivel()) {
+				quartosDisponiveis.add(q);
+			}
+		}
+		
+		return quartosDisponiveis;
+	}
 
+	
 	//Clientes
-	private ArrayList<Cliente> clientes;
+	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();;
 	public ArrayList<Cliente> listarClientes(){
 		return clientes;
 	}
@@ -50,10 +72,20 @@ public class Hotel {
 		}
 		return null;
 	}
+	// Retorna um Cliente cadastrado pelo CPF ou null se não encontrar
+	public Cliente buscarCliente(String cpf) {
+	    for (Cliente c : clientes) {
+	        if (c.getCpf().equals(cpf)) {
+	            return c;
+	        }
+	    }
+	    return null;
+	}
 
+	
 	//Reservas
-	private ArrayList<Reserva> reservas;
-	public ArrayList listarReservas(){
+	private ArrayList<Reserva> reservas = new ArrayList<Reserva>();;
+	public ArrayList<Reserva> listarReservas(){
 		return reservas;
 	}
 	public ArrayList<Reserva> listarReservasPorCliente(String cpf){
@@ -86,7 +118,13 @@ public class Hotel {
 	}
 
 
-	
+	// cria 5 Clientes e 5 Quartos para testes
+ 	public void testeData() {
+		for(int i = 0; i < 5; i++) {
+			clientes.add(new Cliente(999+i, "Clone Name "+i, "999"+i, 18+i, (i%2==0)?'M':'F'));
+			quartos.add(new Quarto(100+i, TipoQuarto.CASAL, 30+i*3, true));
+		}
+	}
 	public Hotel() {
 
 	}
