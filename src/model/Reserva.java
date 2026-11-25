@@ -5,12 +5,14 @@ public class Reserva {
 	Cliente cliente;
 	Quarto quarto;
 	int quantidadeDiarias;
+
 	double valorTotal;
 	
 	
 	
 	public Reserva(int codigo, Cliente cliente, Quarto quarto, int quantidadeDiarias) {
 		super();
+
 		this.codigo = codigo;
 		this.cliente = cliente;
 		this.quarto = quarto;

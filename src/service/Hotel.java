@@ -31,7 +31,7 @@ public class Hotel {
 	// Retorna um Quarto cadastrado pelo Numero ou null se não encontrar
 	public Quarto buscarQuarto(int numero) {
 	    for (Quarto q : quartos) {
-	        if (q.getNumero() == numero && q.isDisponivel()) {
+	        if (q.getNumero() == numero) {
 	            return q;
 	        }
 	    }
@@ -49,6 +49,7 @@ public class Hotel {
 		
 		return quartosDisponiveis;
 	}
+
 
 	
 	//Clientes
@@ -84,27 +85,26 @@ public class Hotel {
 
 	
 	//Reservas
-	private ArrayList<Reserva> reservas = new ArrayList<Reserva>();;
+	private ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 	public ArrayList<Reserva> listarReservas(){
 		return reservas;
 	}
-	public ArrayList<Reserva> listarReservasPorCliente(String cpf){
-		ArrayList<Reserva> reservasCliente = new ArrayList<>();
+
+	public Reserva pesquisarReserva(int codigo){
 		for(Reserva r : reservas){
-			if(r.getCliente().getCpf().equals(cpf)){
-				reservasCliente.add(r);
+			if(r.getCodigo() == codigo){
+				return r;
 			}
-		}
-		if(!reservasCliente.isEmpty()){
-			return reservasCliente;
 		}
 		return null;
 	}
+
 	int proximoCodigoReserva = 1;
 	public Reserva realizarReserva(Cliente cliente, Quarto quarto, int quantidadeDiarias){
 		Reserva reserva = new Reserva(proximoCodigoReserva, cliente, quarto, quantidadeDiarias);
 		reservas.add(reserva);
 		proximoCodigoReserva++;
+		quarto.setDisponivel(false);
 		return reserva;
 	}
 	public Reserva cancelarReservaPorCodigo(int codigo){
@@ -116,6 +116,8 @@ public class Hotel {
 		}
 		return null;
 	}
+
+
 
 
 	// cria 5 Clientes e 5 Quartos para testes

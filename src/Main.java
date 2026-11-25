@@ -14,41 +14,41 @@ public class Main {
 	
 	public static void main(String[] args) {
 		hotel.testeData();
-		int escolha;
+		String escolha;
 		do {
 			escolha = menuPrincipal();
 			
 			switch (escolha) {
-		    case 1:
+		    case "1":
 		        cadastrarCliente();
 		        break;
 
-		    case 2:
+		    case "2":
 		        listarClientes();
 		        break;
 
-		    case 3:
+		    case "3":
 		        listarQuartos();
 		        break;
 
-		    case 4:
+		    case "4":
 		        cadastrarQuarto();
 		        break;
 
-		    case 5:
+		    case "5":
 		        realizarReserva();
 		        break;
 
-		    case 6:
+		    case "6":
 		        listarReservas();
 		        break;
 
-		    case 7:
+		    case "7":
 		        cancelarReserva();
 		        break;
 		}
 			
-		}while(escolha != 0);
+		}while(!escolha.equals("0"));
 		
 		
 		sc.close();
@@ -220,9 +220,9 @@ public class Main {
 
 
 
-	public static int menuPrincipal() {
+	public static String menuPrincipal() {
 		clear();
-		int escolha = 0;
+		String escolha;
 		
 		System.out.println("============================");
 		System.out.println("      SISTEMA DE HOTEL      ");
@@ -248,16 +248,8 @@ public class Main {
 		System.out.println("============================");
 		
 		// TRATAMENTO
-		while(true) {
-			System.out.print("Digite uma opção: ");
-			escolha = sc.nextInt();
-			
-			if(escolha < 0 || escolha > 7) {
-				System.out.println("Valor inválido!");
-				continue;
-			}
-			break;
-		}
+		System.out.print("Digite uma opção: ");
+		escolha = sc.next();
 
 		return escolha;
 	}
