@@ -1,18 +1,50 @@
 package model;
 
-public class Cliente extends Pessoa {
+public class Cliente {
 	private int id;
+	private String nome;
+	private String cpf;
+	private int idade;
+	private char sexo;
+	
 	public Cliente(int id, String nome, String cpf, int idade, char sexo) {
-		super(nome, cpf, idade, sexo);
 		this.id = id;
-	}
-
-	@Override
-	public String toString() {
-		return "- " + this.getNome() 
-				+ "\nCPF: " + this.getCpf() 
-				+ "\nSEXO: " + this.getSexo() 
-				+ "\nIDADE: " + this.getIdade();
+		this.nome = nome;
+		this.cpf = cpf;
+		this.idade = idade;
+		this.sexo = sexo;
 	}
 	
+	public String getNome() {
+		return nome;
+	}
+	public String getCpf() {
+		return cpf;
+	}
+	public int getIdade() {
+		return idade;
+	}
+	public char getSexo() {
+		return sexo;
+	}
+	public int getId() {
+		return id;
+	}
+	
+	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	public void setIdade(int idade) {
+		this.idade = idade;
+	}
+	public void setSexo(char sexo) {
+		this.sexo = sexo;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 }
