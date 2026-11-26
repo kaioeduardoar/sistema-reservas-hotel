@@ -12,7 +12,7 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		Hotel hotel = new Hotel();
 		//TODO: Aqui vai ter o "hotel.load()" quando fizer
-//		hotel.testeData(); // TODO: TIRAR ISSO DPS KK
+		hotel.testeData(); // TODO: TIRAR ISSO DPS KK
 		
 		ServiceCliente serviceCliente = new ServiceCliente(hotel, sc);
 		ServiceQuarto serviceQuarto = new ServiceQuarto(hotel, sc);

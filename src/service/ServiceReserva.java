@@ -50,13 +50,14 @@ public class ServiceReserva extends Service{
 		System.out.println("============================");
 		
 		System.out.print("Digite uma opção: ");
-		escolha = sc.next();
+		escolha = sc.nextLine();
 
 		return escolha;
 	}
 
 	@Override
 	public void create() {
+		clear();
 		if (hotel.listarClientes().size() == 0) {
 			clear();
 			System.out.println("Não há nenhum cliente cadastrado ainda!");
@@ -79,22 +80,16 @@ public class ServiceReserva extends Service{
 		int diarias;
 		
 		// Seleção de cliente
-		do {
-			System.out.println();
-			System.out.println("Digite o CPF do cliente: ");  // TODO: Tratamento
-			System.out.print("> ");
-			String cpf = sc.next();
-			
-			cliente = hotel.buscarCliente(cpf);
-			
-			if(cliente != null) {
-				break;
-			} else {
-				System.out.println();
-				System.out.println("CPF inválido!");
-			}
-			
-		}while(true);
+		cliente = buscarClientePorCpf();
+		if (cliente == null) {
+			return;
+		}
+		
+		System.out.println("\nCliente encontrado:");
+        System.out.println("Nome: " + cliente.getNome());
+        System.out.println("CPF: " + cliente.getCpf());
+        
+        pausar();
 		
 		
 		// Seleção de quarto
@@ -108,31 +103,19 @@ public class ServiceReserva extends Service{
 			System.out.println();
 		}
 		
-		do {
-			System.out.println();
-			System.out.println("Digite o numero do quarto: ");
-			System.out.print("> ");
-			int numero = sc.nextInt();
-			
-			quarto = hotel.buscarQuarto(numero);
-			
-			if(quarto != null) {
-				break;
-			} else {
-				System.out.println();
-				System.out.println("Numero inválido!");
-			}
-			
-		}while(true);
+		System.out.println();
+		quarto = buscarQuartoPorNumero();
+        
+        if(quarto == null) {
+        	return;
+        }
 		
 		// Seleção de diárias
-		System.out.println();
-		System.out.println("Quantos dias?");
-		System.out.print("> ");
-		diarias = sc.nextInt();
+		diarias = lerInteiro("\nQuantos dias: ");
 		
 		
 		// Criação e confimeção da reserva
+		clear();
 		System.out.println();
 		System.out.println("RESUMO DA RESERVA");
 		System.out.println();
@@ -141,24 +124,17 @@ public class ServiceReserva extends Service{
 		System.out.println("Diárias: " + diarias);
 		System.out.printf("Valor: R$%.2f \n", quarto.getDiaria()*diarias);
 		
-		System.out.println();
-		System.out.println("Confirmar? (s ou sim / outra coisa cancela)");
-		System.out.print("> ");
-		String confirmacao = sc.next().toLowerCase();
-		if (confirmacao.equals("s") || confirmacao.equals("sim")) {
+	
+		if (confirmar("\nConfirmar reserva? (S/N): ")) {
 			hotel.realizarReserva(cliente, quarto, diarias);
 			clear();
 			System.out.println("Reserva concluída!");
-			System.out.println("(Digite algo para voltar)");
-			System.out.print("> ");
-			sc.next();
+			pausar();
 			return;
 		} else {
 			clear();
 			System.out.println("Reserva cancelada!");
-			System.out.println("(Digite algo para voltar)");
-			System.out.print("> ");
-			sc.next();
+			pausar();
 			return;
 		}
 	}
@@ -170,15 +146,12 @@ public class ServiceReserva extends Service{
 		
 	    if (reservas.isEmpty()) {
 	        System.out.println("\nNenhuma reserva cadastrada!");
-	        System.out.println("(Digite algo para voltar)");
-			System.out.print("> ");
-			sc.next();
+	        pausar();
 	        return;
 	    }
 
 	    System.out.println("\n" + "=".repeat(65));
-	    System.out.printf("%-8s %-20s %-12s %-8s %12s%n",
-	            "CÓDIGO", "CLIENTE", "QUARTO", "DIÁRIAS", "VALOR");
+	    System.out.printf("%-8s %-20s %-12s %-8s %12s%n", "CÓDIGO", "CLIENTE", "QUARTO", "DIÁRIAS", "VALOR");
 	    System.out.println("-".repeat(65));
 
 	    for (Reserva r : reservas) {
@@ -194,9 +167,7 @@ public class ServiceReserva extends Service{
 
 	    System.out.println("=".repeat(65));
 	    
-		System.out.println("(Digite algo para voltar)");
-		System.out.print("> ");
-		sc.next();
+		pausar();
 		return;
 	}
 	
@@ -229,10 +200,8 @@ public class ServiceReserva extends Service{
 	    System.out.println("Diárias: " + reserva.getQuantidadeDiarias());
 	    System.out.println("----------------------------");
 
-	    System.out.print("\nDeseja realmente cancelar? (S/N): ");
-	    String escolha = sc.nextLine();
 
-	    if (escolha.equalsIgnoreCase("S")) {
+	    if (confirmar("\nDeseja realmente cancelar? (S/N): ")) {
 	        reserva.getQuarto().liberar();
 
 	        hotel.cancelarReservaPorCodigo(codigo);
@@ -245,21 +214,4 @@ public class ServiceReserva extends Service{
 	    pausar();
 	}
 	
-	private int lerInteiro(String mensagem) {
-	    while (true) {
-	        System.out.print(mensagem);
-
-	        try {
-	            return Integer.parseInt(sc.nextLine());
-
-	        } catch (NumberFormatException e) {
-	            System.out.println("Digite apenas números inteiros!");
-	        }
-	    }
-	}
-
-	private void pausar() {
-	    System.out.println("\nPressione ENTER para continuar...");
-	    sc.nextLine();
-	}
 }

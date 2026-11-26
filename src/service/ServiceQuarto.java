@@ -6,7 +6,7 @@ import model.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-@SuppressWarnings("unused")
+
 public class ServiceQuarto extends Service {
 
     public ServiceQuarto(Hotel hotel, Scanner sc) {
@@ -98,10 +98,9 @@ public class ServiceQuarto extends Service {
         System.out.println("===== ATUALIZAR QUARTO =====");
 
         Quarto quarto = buscarQuartoPorNumero();
-
-        if (quarto == null) {
-            pausar();
-            return;
+                
+        if(quarto == null) {
+        	return;
         }
 
         String escolha;
@@ -177,12 +176,11 @@ public class ServiceQuarto extends Service {
         System.out.println("===== EXCLUIR QUARTO =====");
 
         Quarto quarto = buscarQuartoPorNumero();
-
-        if (quarto == null) {
-            pausar();
-            return;
+        
+        if(quarto == null) {
+        	return;
         }
-
+        
         System.out.println("\nQuarto encontrado:");
         System.out.println("Número: " + quarto.getNumero());
         System.out.println("Tipo: " + quarto.getTipo());
@@ -201,32 +199,7 @@ public class ServiceQuarto extends Service {
     }
 
     // MÉTODOS AUXILIARES
-
-    private Quarto buscarQuartoPorNumero() {
-        int numero = lerInteiro("Digite o número do quarto: ");
-
-        Quarto quarto = hotel.buscarQuarto(numero);
-
-        if (quarto == null) {
-            System.out.println("\nQuarto não encontrado!");
-        }
-
-        return quarto;
-    }
-
-    private int lerInteiro(String mensagem) {
-        while (true) {
-            System.out.print(mensagem);
-
-            try {
-                return Integer.parseInt(sc.nextLine());
-
-            } catch (NumberFormatException e) {
-                System.out.println("Digite apenas números inteiros!");
-            }
-        }
-    }
-
+ 
     private double lerDouble(String mensagem) {
         while (true) {
             System.out.print(mensagem);
@@ -293,8 +266,4 @@ public class ServiceQuarto extends Service {
         }
     }
 
-    private void pausar() {
-        System.out.println("\nPressione ENTER para continuar...");
-        sc.nextLine();
-    }
 }

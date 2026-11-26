@@ -5,7 +5,7 @@ import model.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-@SuppressWarnings("unused")
+
 public class ServiceCliente extends Service {
 
     public ServiceCliente(Hotel hotel, Scanner sc) {
@@ -96,13 +96,15 @@ public class ServiceCliente extends Service {
 
         System.out.println("===== ATUALIZAR CLIENTE =====");
 
-        Cliente cliente = buscarClientePorCpf();
-
-        if (cliente == null) {
-            pausar();
-            return;
+        Cliente cliente;
+        
+        cliente = buscarClientePorCpf();
+        
+        if(cliente == null) {
+        	return;
         }
 
+        
         String escolha;
 
         do {
@@ -124,33 +126,33 @@ public class ServiceCliente extends Service {
             escolha = sc.nextLine();
 
             switch (escolha) {
-                case "1":
-                    System.out.print("Novo nome: ");
-                    cliente.setNome(sc.nextLine());
-                    System.out.println("Nome atualizado!");
-                    pausar();
-                    break;
+            	case "1":
+            		System.out.print("Novo nome: ");
+            		cliente.setNome(sc.nextLine());
+            		System.out.println("Nome atualizado!");
+            		pausar();
+            		break;
 
-                case "2":
-                    System.out.print("Novo CPF: ");
-                    cliente.setCpf(sc.nextLine());
-                    System.out.println("CPF atualizado!");
-                    pausar();
-                    break;
+            	case "2":
+            		System.out.print("Novo CPF: ");
+            		cliente.setCpf(sc.nextLine());
+            		System.out.println("CPF atualizado!");
+            		pausar();
+            		break;
 
-                case "3":
-                    cliente.setIdade(lerInteiro("Nova idade: "));
-                    System.out.println("Idade atualizada!");
-                    pausar();
-                    break;
+            	case "3":
+                	cliente.setIdade(lerInteiro("Nova idade: "));
+                	System.out.println("Idade atualizada!");
+                	pausar();
+                	break;
 
-                case "4":
-                    cliente.setSexo(lerSexo());
-                    System.out.println("Sexo atualizado!");
-                    pausar();
-                    break;
+            	case "4":
+            		cliente.setSexo(lerSexo());
+            		System.out.println("Sexo atualizado!");
+            		pausar();
+            		break;
 
-                case "0":
+            	case "0":
                     break;
 
                 default:
@@ -167,26 +169,22 @@ public class ServiceCliente extends Service {
         clear();
 
         System.out.println("===== EXCLUIR CLIENTE =====");
-
+        
         Cliente cliente = buscarClientePorCpf();
-
-        if (cliente == null) {
-            pausar();
-            return;
+        
+        if(cliente == null) {
+        	return;
         }
 
         System.out.println("\nCliente encontrado:");
         System.out.println("Nome: " + cliente.getNome());
         System.out.println("CPF: " + cliente.getCpf());
 
-        System.out.print("\nDeseja realmente excluir? (S/N): ");
-        String escolha = sc.nextLine();
-
-        if (escolha.equalsIgnoreCase("S")) {
-            hotel.excluirClientePorCpf(cliente.getCpf());
-            System.out.println("\nCliente excluído com sucesso!");
+        if (confirmar("\nDeseja realmente excluir? (S/N): ")) {
+        	hotel.excluirClientePorCpf(cliente.getCpf());
+        	System.out.println("\nCliente excluído com sucesso!");
         } else {
-            System.out.println("\nOperação cancelada.");
+        	System.out.println("\nOperação cancelada.");
         }
 
         pausar();
@@ -195,53 +193,18 @@ public class ServiceCliente extends Service {
     
     // MÉTODOS AUXILIARES
 
-    private Cliente buscarClientePorCpf() {
-        System.out.print("Digite o CPF do cliente: ");
-        String cpf = sc.nextLine();
-
-        Cliente cliente = hotel.buscarCliente(cpf);
-
-        if (cliente == null) {
-            System.out.println("\nCliente não encontrado!");
-        }
-
-        return cliente;
-    }
-
-    private int lerInteiro(String mensagem) {
-        int valor;
-
-        while (true) {
-            System.out.print(mensagem);
-
-            try {
-                valor = Integer.parseInt(sc.nextLine());
-                return valor;
-
-            } catch (NumberFormatException e) {
-                System.out.println("Digite apenas números inteiros!");
-            }
-        }
-    }
-
     private char lerSexo() {
-        while (true) {
-            System.out.print("Sexo (M/F): ");
+    	while (true) {
+        	System.out.print("Sexo (M/F): ");
+        	
+        	String entrada = sc.nextLine();
 
-            String entrada = sc.nextLine();
+        	if (entrada.equalsIgnoreCase("M") || entrada.equalsIgnoreCase("F")) {
+        		return entrada.toUpperCase().charAt(0);
+        	}
 
-            if (entrada.equalsIgnoreCase("M") ||
-                entrada.equalsIgnoreCase("F")) {
-
-                return entrada.toUpperCase().charAt(0);
-            }
-
-            System.out.println("Opção inválida! Digite M ou F.");
+        	System.out.println("Opção inválida! Digite M ou F.");
         }
     }
 
-    private void pausar() {
-        System.out.println("\nPressione ENTER para continuar...");
-        sc.nextLine();
-    }
 }
