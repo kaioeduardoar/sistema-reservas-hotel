@@ -1,15 +1,16 @@
 
-package service;
+package ui;
 
 import model.*;
+import service.Hotel;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class ServiceQuarto extends Service {
+public class MenuQuarto extends Menu {
 
-    public ServiceQuarto(Hotel hotel, Scanner sc) {
+    public MenuQuarto(Hotel hotel, Scanner sc) {
         super(hotel, sc);
     }
 
@@ -50,7 +51,7 @@ public class ServiceQuarto extends Service {
 
         boolean disponivel = lerDisponibilidade();
 
-        Quarto quarto = hotel.adicionarQuarto(
+        Quarto quarto = hotel.quartoService.adicionarQuarto(
             numero, tipo, diaria, disponivel
         );
 
@@ -67,7 +68,7 @@ public class ServiceQuarto extends Service {
 
         System.out.println("======= LISTA DE QUARTOS =======");
 
-        ArrayList<Quarto> quartos = hotel.listarQuartos();
+        ArrayList<Quarto> quartos = hotel.quartoService.listarQuartos();
 
         if (quartos.isEmpty()) {
             System.out.println("\nNenhum quarto cadastrado.");
@@ -189,7 +190,7 @@ public class ServiceQuarto extends Service {
         String escolha = sc.nextLine();
 
         if (escolha.equalsIgnoreCase("S")) {
-            hotel.excuirQuarto(quarto.getNumero());
+            hotel.quartoService.excuirQuarto(quarto.getNumero());
             System.out.println("\nQuarto excluído com sucesso!");
         } else {
             System.out.println("\nOperação cancelada.");

@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
 import service.Hotel;
-import service.ServiceCliente;
-import service.ServiceQuarto;
-import service.ServiceReserva;
+import ui.MenuCliente;
+import ui.MenuQuarto;
+import ui.MenuReserva;
 
 
 public class Main {
@@ -14,9 +14,9 @@ public class Main {
 		//TODO: Aqui vai ter o "hotel.load()" quando fizer
 		hotel.testeData(); // TODO: TIRAR ISSO DPS KK
 		
-		ServiceCliente serviceCliente = new ServiceCliente(hotel, sc);
-		ServiceQuarto serviceQuarto = new ServiceQuarto(hotel, sc);
-		ServiceReserva serviceReserva = new ServiceReserva(hotel, sc);
+		MenuCliente serviceCliente = new MenuCliente(hotel, sc);
+		MenuQuarto serviceQuarto = new MenuQuarto(hotel, sc);
+		MenuReserva serviceReserva = new MenuReserva(hotel, sc);
 		
 		String escolha;
 		do {

@@ -1,15 +1,16 @@
-package service;
+package ui;
 
 import java.util.Scanner;
 
 import model.Cliente;
 import model.Quarto;
+import service.Hotel;
 
-public class Service {
+public class Menu {
 	protected Hotel hotel;
 	protected Scanner sc;
 	
-	public Service(Hotel hotel, Scanner sc) {
+	public Menu(Hotel hotel, Scanner sc) {
 		this.hotel = hotel;
 		this.sc = sc;
 	}
@@ -64,7 +65,7 @@ public class Service {
 	        System.out.print("Digite o CPF do cliente: ");
 	        String cpf = sc.nextLine();
 	
-	        cliente = hotel.buscarCliente(cpf);
+	        cliente = hotel.clienteService.buscarCliente(cpf);
 	
 	        if (cliente == null) {
 	            System.out.println("\nCliente não encontrado!");
@@ -78,7 +79,7 @@ public class Service {
     	do {
 	        int numero = lerInteiro("Digite o número do quarto: ");
 	
-	        quarto = hotel.buscarQuarto(numero);
+	        quarto = hotel.quartoService.buscarQuarto(numero);
 	
 	        if (quarto == null) {
 	            System.out.println("\nQuarto não encontrado!");

@@ -1,13 +1,14 @@
-package service;
+package ui;
 
 import model.*;
+import service.Hotel;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ServiceReserva extends Service{
+public class MenuReserva extends Menu {
 
-	public ServiceReserva(Hotel hotel, Scanner sc) {
+	public MenuReserva(Hotel hotel, Scanner sc) {
 		super(hotel, sc);
 	}
 	
@@ -58,7 +59,7 @@ public class ServiceReserva extends Service{
 	@Override
 	public void create() {
 		clear();
-		if (hotel.listarClientes().size() == 0) {
+		if (hotel.clienteService.listarClientes().size() == 0) {
 			clear();
 			System.out.println("Não há nenhum cliente cadastrado ainda!");
 			System.out.println("(Digite algo para voltar)");
@@ -66,7 +67,7 @@ public class ServiceReserva extends Service{
 			sc.next();
 			return;
 		}
-		if (hotel.listarQuartos().size() == 0) {
+		if (hotel.quartoService.listarQuartos().size() == 0) {
 			clear();
 			System.out.println("Não há nenhum quarto cadastrado ainda!");
 			System.out.println("(Digite algo para voltar)");
@@ -97,7 +98,7 @@ public class ServiceReserva extends Service{
 		System.out.println("QUARTOS DISPONÍVEIS");
 		System.out.println();
 		
-		ArrayList<Quarto> quartosDisponiveis = hotel.buscarQuartosDisponiveis();
+		ArrayList<Quarto> quartosDisponiveis = hotel.quartoService.buscarQuartosDisponiveis();
 		for(Quarto q: quartosDisponiveis) {
 			System.out.printf(" %-5d - %-10s - R$ %.2f/dia", q.getNumero(), q.getTipo(), q.getDiaria());
 			System.out.println();
@@ -126,7 +127,7 @@ public class ServiceReserva extends Service{
 		
 	
 		if (confirmar("\nConfirmar reserva? (S/N): ")) {
-			hotel.realizarReserva(cliente, quarto, diarias);
+			hotel.reservaService.realizarReserva(cliente, quarto, diarias);
 			clear();
 			System.out.println("Reserva concluída!");
 			pausar();
@@ -141,7 +142,7 @@ public class ServiceReserva extends Service{
 	
 	@Override
 	public void list() {
-		ArrayList<Reserva> reservas = hotel.listarReservas();
+		ArrayList<Reserva> reservas = hotel.reservaService.listarReservas();
 		clear();
 		
 	    if (reservas.isEmpty()) {
@@ -184,7 +185,7 @@ public class ServiceReserva extends Service{
 
 	    int codigo = lerInteiro("Digite o código da reserva: ");
 
-	    Reserva reserva = hotel.pesquisarReserva(codigo);
+	    Reserva reserva = hotel.reservaService.pesquisarReserva(codigo);
 
 	    if (reserva == null) {
 	        System.out.println("\nReserva não encontrada!");
@@ -204,7 +205,7 @@ public class ServiceReserva extends Service{
 	    if (confirmar("\nDeseja realmente cancelar? (S/N): ")) {
 	        reserva.getQuarto().liberar();
 
-	        hotel.cancelarReservaPorCodigo(codigo);
+	        hotel.reservaService.cancelarReservaPorCodigo(codigo);
 
 	        System.out.println("\nReserva cancelada com sucesso!");
 	    } else {

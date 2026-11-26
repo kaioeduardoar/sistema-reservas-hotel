@@ -1,14 +1,16 @@
 
-package service;
+package ui;
 
 import model.*;
+import service.Hotel;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class ServiceCliente extends Service {
+public class MenuCliente extends Menu {
 
-    public ServiceCliente(Hotel hotel, Scanner sc) {
+    public MenuCliente(Hotel hotel, Scanner sc) {
         super(hotel, sc);
     }
 
@@ -51,7 +53,7 @@ public class ServiceCliente extends Service {
 
         char sexo = lerSexo();
 
-        Cliente cliente = hotel.cadastrarCliente(
+        Cliente cliente = hotel.clienteService.cadastrarCliente(
             nome, cpf, idade, sexo
         );
 
@@ -68,7 +70,7 @@ public class ServiceCliente extends Service {
 
         System.out.println("======= LISTA DE CLIENTES =======");
 
-        ArrayList<Cliente> clientes = hotel.listarClientes();
+        ArrayList<Cliente> clientes = hotel.clienteService.listarClientes();
 
         if (clientes.isEmpty()) {
             System.out.println("\nNenhum cliente cadastrado.");
@@ -181,7 +183,7 @@ public class ServiceCliente extends Service {
         System.out.println("CPF: " + cliente.getCpf());
 
         if (confirmar("\nDeseja realmente excluir? (S/N): ")) {
-        	hotel.excluirClientePorCpf(cliente.getCpf());
+        	hotel.clienteService.excluirClientePorCpf(cliente.getCpf());
         	System.out.println("\nCliente excluído com sucesso!");
         } else {
         	System.out.println("\nOperação cancelada.");
