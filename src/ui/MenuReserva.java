@@ -105,7 +105,7 @@ public class MenuReserva extends Menu {
 		}
 		
 		System.out.println();
-		quarto = buscarQuartoPorNumero();
+		quarto = buscarQuartoDisponivelPorNumero();
         
         if(quarto == null) {
         	return;

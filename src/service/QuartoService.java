@@ -34,6 +34,13 @@ public class QuartoService {
 	    }
 	    return null;
 	}
+	public Quarto buscarQuartoDisponivel(int numero){
+		Quarto q = buscarQuarto(numero);
+		if (q != null && q.isDisponivel()){
+			return q;
+		}
+		return null;
+	}
 	// Retorna todos os quartos disponíveis
 	public ArrayList<Quarto> buscarQuartosDisponiveis() {
 		ArrayList<Quarto> quartosDisponiveis = new ArrayList<Quarto>();

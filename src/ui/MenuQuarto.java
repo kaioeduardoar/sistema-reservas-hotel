@@ -103,6 +103,7 @@ public class MenuQuarto extends Menu {
         if(quarto == null) {
         	return;
         }
+        
 
         String escolha;
 

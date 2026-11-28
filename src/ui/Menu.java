@@ -88,6 +88,23 @@ public class Menu {
         
     	return quarto;
     }
+	protected Quarto buscarQuartoDisponivelPorNumero() {
+		Quarto quarto;
+		do {
+			int numero = lerInteiro("Digite o número do quarto: ");
+			quarto = hotel.quartoService.buscarQuarto(numero);
+
+			if (quarto == null) {
+				System.out.println("\nQuarto não encontrado!");
+				quarto = null;
+			} else if (!quarto.isDisponivel()) {
+				System.out.println("\nEste quarto não está disponível!");
+				quarto = null;
+			}
+		} while (quarto == null && confirmar("\nTentar novamente? (S/N): "));
+
+		return quarto;
+	}
 	protected boolean confirmar(String mensagem) {
 		System.out.print(mensagem);
 		
